@@ -19,12 +19,12 @@ So, it is important that we scale the factor values by width(more like average f
 
 So, final fitness score formula will be:  
 	  
-	Fitness score  \= 	\- weight1 \* (piece\_height)  
-\- weight2 \* (total\_row\_flips / board\_width)  
-\- weight3 \* (total\_col\_flips / board\_width)  
-\- weight4 \* (total\_number\_holes /  board\_width)  
-\- weight5 \* (total\_column\_heights / board\_width)  
-	\- weight6 \* ((total\_well\_height)2 / board\_width)
+	Fitness score  = 	- weight1 * (piece_height)  
+	- weight2 * (total_row_flips / board_width)  
+	- weight3 * (total_col_flips / board_width)  
+	- weight4 * (total_number_holes /  board_width)  
+	- weight5 * (total_column_heights / board_width)  
+	- weight6 * ((total_well_height)*2 / board_width)
 
 ## Weight-Tuning
 
@@ -75,64 +75,64 @@ I have changed the core code of the game to make my evolutionary algorithm work.
 
 `using AlanZucconi.Data;`
 
-`namespace AlanZucconi.Tetris`  
-`{`  
-	`[CreateAssetMenu(`  
-    	`fileName = "TetrisAI",`  
-    	`menuName = "Tetris/Scripts/TetrisAI"`  
-	`)]`
+`namespace AlanZucconi.Tetris  
+{  
+	[CreateAssetMenu(  
+    	fileName = "TetrisAI",
+    	menuName = "Tetris/Scripts/TetrisAI"
+	)]
 
-	`public class TetrisAI : ScriptableObject`  
-	`{`  
-    	`[Header("Student Data")]`  
-    	`public string StudentLogin = "yourlogin";`  
-    	`public string StudentName = "FirstName LastName";`  
-    	`public string StudentEmail = "youremail@gold.ac.uk";`
+	public class TetrisAI : ScriptableObject`  
+	{  
+    	[Header("Student Data")]
+    	public string StudentLogin = "yourlogin"; 
+    	public string StudentName = "FirstName LastName";
+    	public string StudentEmail = "youremail@gold.ac.uk";
 
-    	`public float pieceHeightWt;`  
-`public float rowFlipsWt;`  
-    	`public float colFlipsWt;`  
-`public float sumHolesWt;`  
-    	`public float sumHeightWt;`  
-    	`public float sumWellWt;`
+    	public float pieceHeightWt;  
+		public float rowFlipsWt;  
+    	public float colFlipsWt; 
+		public float sumHolesWt;  
+    	public float sumHeightWt;  
+    	public float sumWellWt;
 
-    	`// Will be initialized by the Automation tool`  
-    	`[Header("Statistics")]`  
-    	`[Space]`  
-    	`[ReadOnly]`  
-    	`public float MedianScore = 0;`  
-    	`[ReadOnly]`  
-    	`public float AverageScore = 0;`
+    	// Will be initialized by the Automation tool  
+    	[Header("Statistics")]  
+    	[Space]  
+    	[ReadOnly]  
+    	public float MedianScore = 0;  
+    	[ReadOnly]  
+    	public float AverageScore = 0;
 
-    	`[Header("Results")]`  
-    	`//[LinePlot(LabelX = "test", LabelY = "points")]`  
-    	`//[ScatterPlot(LabelX = "test", LabelY = "points")]`  
-    	`//[HistogramPlot(Bins=15, LabelX = "points", LabelY = "count")]`  
-    	`[HistogramPlot(LabelX = "points", LabelY = "count")]`  
-    	`public PlotData PlotData = new PlotData();`
+    	[Header("Results")]  
+    	//[LinePlot(LabelX = "test", LabelY = "points")]  
+    	//[ScatterPlot(LabelX = "test", LabelY = "points")]  
+    	//[HistogramPlot(Bins=15, LabelX = "points", LabelY = "count")]  
+    	[HistogramPlot(LabelX = "points", LabelY = "count")]  
+    	public PlotData PlotData = new PlotData();
 
-    	`[HideInInspector]`  
-    	`public TetrisGame Tetris;`
+    	[HideInInspector]  
+    	public TetrisGame Tetris;
 
-    	`public void SetTetrisGame(TetrisGame tetris)`  
-    	`{`  
-        	`Tetris = tetris;`  
-    	`}`
+    	public void SetTetrisGame(TetrisGame tetris)  
+    	{  
+        	Tetris = tetris;  
+    	}
 
-    	`// public abstract int ChooseMove(Move[] moves);`
+    	// public abstract int ChooseMove(Move[] moves);
 
-    	`// Can be used to initialisation`  
-    	`public virtual void Initialise() { }`
+    	// Can be used to initialisation  
+    	public virtual void Initialise() { }
 
-    	`// Method to choose the best move based on fitness`  
-    	`public virtual int ChooseMove(Move[] moves)`  
-    	`{`  
-        	`float bestFitness = float.MinValue;`  
-        	`int bestMoveIndex = 0;`
+    	// Method to choose the best move based on fitness  
+    	public virtual int ChooseMove(Move[] moves)  
+    	{  
+        	float bestFitness = float.MinValue;  
+        	int bestMoveIndex = 0;
 
-        	`// Iterate through all the possible moves`  
-        	`for (int i = 0; i < moves.Length; i++)`  
-        	`{`  
+        	// Iterate through all the possible moves  
+        	for (int i = 0; i < moves.Length; i++)  
+        	{  
             	`// Calculate the fitness for each move`  
             	`float fitness = CalculateMoveFitness(moves[i]);`
 
